@@ -16,18 +16,28 @@ y1
 hist(y1)
 
 # Crie um plot do relacionamento de x e y1
+?plot
+plot(x, y1, xlab = 'x', ylab = 'y')
 
 
 # Crie um modelo de regressão para as duas variáveis x e y1
+modelo <- lm(y1 ~ x)
 
+class(modelo)
 
 # Capture os coeficentes
+a <- modelo$coefficients[1]
+a
 
+b <- modelo$coefficients[2]
+b
 
 # Fórmula de Regressão
 y2 <- a + b*x
+y2
 
 # Visualize a linha de regressão
+lines(x, y2, lwd = 2)
 
 
 # Simulando outras possíveis linhas de regressão
@@ -49,17 +59,17 @@ Tempo <- c(17.87,13.75,12.72,6.98,11.01,10.48,10.19,19.11,
            12.72,0.45,10.67,1.59,14.91,14.14,9.40,16.23,
            12.74,20.64,12.34,6.44)
 
-# Crie um Gráfico de Dispersão (ScatterPlot)
-
+# Crie um Gráfico de Dispersão 
+plot(Idade, Tempo, xlab = 'Idade', ylab = 'Tempo Reação')
 
 # Crie um modelo de regressão
-
+modelo <- lm(Tempo ~ Idade)
 
 # Calcule a reta de regressão
-
+reta <- modelo$coefficients[1] + modelo$coefficients[2]*Idade
 
 # Crie o gráfico da reta
-
+lines(Idade, reta, lwd = 2)
 
 
 # Exercício 3 - Relação entre altura e peso
@@ -74,31 +84,29 @@ plot(alturas, pesos, pch = 16, cex = 1.3, col = "blue",
      xlab = "Altura (cm)")
 
 # Crie o modelo de regressão
+modelo <- lm(pesos ~ alturas)
 
 
 # Visualizando o modelo
-
+modelo
+summary(modelo)
 
 # Gere a linha de regressão
+abline(modelo$coefficients[1], modelo$coefficients[2])
+abline(lm(pesos ~ alturas))
 
 
 # Faça as previsões de pesos com base na nova lista de alturas
 alturas2 = data.frame(c(179, 152, 134, 197, 131, 178, 185, 162, 155, 172))
 
+previsao <- predict(modelo, alturas2)
+previsao
 
-# Plot
-plot(alturas, pesos, pch = 16, cex = 1.3, 
-     col = "blue", 
-     main = "Altura x Peso", 
-     ylab = "Peso (kg)", 
-     xlab = "Altura (cm)")
-
-# Construindo a linha de regressão
-abline(lm(pesos ~ alturas)) 
 
 # Obtendo o tamanho de uma das amostras de dados
 num <- length(alturas)
 num
+
 
 # Gerando um gráfico com os valores residuais
 for (k in 1: num)  
@@ -109,97 +117,6 @@ for (k in 1: num)
 par(mfrow = c(2,2))
 plot(modelo)
 
-
-# Lista de Exercícios Parte 2 - Capítulo 11
-
-# Obs: Caso tenha problemas com a acentuação, consulte este link:
-# https://support.rstudio.com/hc/en-us/articles/200532197-Character-Encoding
-
-# Configurando o diretório de trabalho
-# Coloque entre aspas o diretório de trabalho que você está usando no seu computador
-# Não use diretórios com espaço no nome
-setwd("C:/FCD/BigDataRAzure/Cap12")
-getwd()
-
-
-# Regressão Linear
-# Definição do Problema: Prever as notas dos alunos com base em diversas métricas
-# https://archive.ics.uci.edu/ml/datasets/Student+Performance
-# Dataset com dados de estudantes
-# Vamos prever a nota final (grade) dos alunos
-
-# Carregando o dataset
-df <- read.csv2('estudantes.csv')
-
-# Explorando os dados
-head(df)
-summary(df)
-str(df)
-any(is.na(df))
-
-# install.packages("ggplot2")
-# install.packages("ggthemes")
-# install.packages("dplyr")
-library(ggplot2)
-library(ggthemes)
-library(dplyr)
-
-
-# Lista de Exercícios Parte 3 - Capítulo 11
-
-# Obs: Caso tenha problemas com a acentuação, consulte este link:
-# https://support.rstudio.com/hc/en-us/articles/200532197-Character-Encoding
-
-# Configurando o diretório de trabalho
-# Coloque entre aspas o diretório de trabalho que você está usando no seu computador
-# Não use diretórios com espaço no nome
-setwd("C:/FCD/BigDataRAzure/Cap12")
-getwd()
-
-
-# Definindo o Problema: Analisando dados das casas de Boston, nos EUA e fazendo previsoes.
-
-# The Boston Housing Dataset
-# http://www.cs.toronto.edu/~delve/data/boston/bostonDetail.html
-
-# Seu modelo deve prever a MEDV (Valor da Mediana de ocupação das casas). Utilize um modelo de rede neural!
-
-# Carregando o pacote MASS
-library(MASS)
-
-# Importando os dados do dataset Boston
-set.seed(101)
-dados <- Boston
-head(dados)
-
-# Resumo dos dados
-str(dados)
-summary(dados)
-any(is.na(dados))
-
-# Carregando o pacote para Redes Neurais
-install.packages("neuralnet")
-library(neuralnet)
-
-# Lista de Exercícios Parte 4 - Capítulo 11
-
-# Definindo o Problema: OCR - Optical Character Recognition
-# Seu modelo deve prever o caracter a partir do dataset fornecido. Use um modelo SVM
-
-## Explorando e preparando os dados
-letters <- read.csv("letterdata.csv")
-str(letters)
-
-# Criando dados de treino e dados de teste
-letters_treino <- letters[1:16000, ]
-letters_teste  <- letters[16001:20000, ]
-
-## Treinando o Modelo
-library(kernlab)
-
-# Criando o modelo com o kernel vanilladot
-letter_classifier <- ksvm(..........)
-
-
+summary(modelo)
 
 
